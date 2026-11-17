@@ -25,6 +25,7 @@ button{font:inherit;border:0;border-radius:10px;background:var(--btn);color:var(
 #view,#chr,#spd,#wave{position:absolute;right:12px;bottom:calc(150px + env(safe-area-inset-bottom,0px));font-size:13px;padding:8px 11px;background:var(--card);color:var(--ink);border:1px solid var(--line)}#chr{bottom:calc(196px + env(safe-area-inset-bottom,0px))}#spd{bottom:calc(242px + env(safe-area-inset-bottom,0px));display:none}#wave{bottom:calc(288px + env(safe-area-inset-bottom,0px));display:none}#hand{position:absolute;right:14%;bottom:34%;font-size:72px;display:none;pointer-events:none;transform-origin:70% 90%}#hand.wv{animation:wv 2.6s ease-in-out}@keyframes wv{0%{transform:translateY(120px) rotate(0)}15%{transform:translateY(0) rotate(-10deg)}30%{transform:rotate(25deg)}45%{transform:rotate(-15deg)}60%{transform:rotate(25deg)}75%{transform:rotate(-15deg)}90%{transform:translateY(0)}100%{transform:translateY(160px)}}#dot{position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px;border-radius:50%;background:#fff;border:1px solid #0008;pointer-events:none;opacity:.85}
 #quit,#bye,#pick,#minebox{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#0009;z-index:5}#bye{background:#0d1a12}.qb{width:min(86vw,340px);background:var(--bg);border-radius:16px;padding:20px;text-align:center}.qb h3{margin:0 0 14px;font-size:19px}.qb p{margin:0 0 14px;font-size:14px}.row{display:flex;gap:10px}.row button{flex:1}.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}#pk{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}#pk button{display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--card);color:var(--ink);border:2px solid var(--line);padding:8px 4px;font-size:14px}#pk button.on{border-color:var(--btn)}#pk img{max-width:none}#pick .qb,#minebox .qb{max-height:84vh;overflow:auto}#snd{position:absolute;left:8px;top:8px;z-index:2;width:42px;height:38px;padding:0;font-size:19px;line-height:1;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px}
 #adm{position:absolute;left:58px;top:8px;display:none;font-size:13px;padding:8px 11px;background:var(--card);color:var(--ink);border:1px solid var(--line);z-index:2}body #top{display:none}body.adm #top{display:flex;top:54px}body #gh{display:none;position:absolute;right:12px;top:58px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:6px 10px;font-size:12px;line-height:1.5;text-align:right;pointer-events:none;z-index:2}body.adm #gh{top:198px}body #cart{top:12px}body.adm #cart{top:152px}body #toast{top:70px}body.adm #toast{top:172px}#ml div{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px;text-align:left;font-size:14px}#ml button{padding:6px 10px;font-size:13px}#ml p{margin:0 0 8px}
+#cart{cursor:pointer;color:var(--ink);font-weight:700;z-index:2}#cartbox{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#0009;z-index:6}#cartbox .qb{max-height:80vh;overflow:auto;text-align:left}#cartbox h3{text-align:center}#cbl .it{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}#cbl .it img{width:38px;height:38px;object-fit:cover;border-radius:8px;flex:none}#cbl .it .ic{width:38px;height:38px;border-radius:8px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex:none}#cbl .nm{flex:1;min-width:0;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#cbl .pr{color:#c0392b;font-weight:700;white-space:nowrap}#cbl .rm{background:transparent;color:var(--ink);border:1px solid var(--line);padding:4px 8px;font-size:12px}#cbl .tot{display:flex;justify-content:space-between;font-size:16px;font-weight:800;margin:12px 0 14px}#cbl .em{text-align:center;color:#7a6a55;margin:6px 0 16px;font-size:14px}
 #toast{position:absolute;left:50%;top:128px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:20px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
 #cart{position:absolute;right:12px;top:calc(104px);font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:5px 9px}
 #pay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#0008}
@@ -52,7 +53,7 @@ button{font:inherit;border:0;border-radius:10px;background:var(--btn);color:var(
 <button id="noticeOk">장보러 가기</button></div></div>
 <div id="stage"></div><button id="snd" aria-label="음악 끄기">🔊</button><button id="adm">🔧 관리자</button>
 <div id="top"><select id="ct"><option value="과일">과일 벽</option><option value="식품">식품 벽</option><option value="수산물">수산물 벽</option><option value="정육">정육 벽</option><option value="진열대1">진열대 1번</option><option value="진열대2">진열대 2번</option><option value="진열대3">진열대 3번</option><option value="진열대4">진열대 4번</option><option value="진열대5">진열대 5번</option><option value="진열대6">진열대 6번</option></select><input id="nm" placeholder="상품명" maxlength="14"><button id="add">진열</button><button id="mine" class="ghost">내 상품</button><a id="cpb" class="lbtn" href="https://partners.coupang.com/#affiliate/ws/link" target="_blank" rel="noopener noreferrer">🛍 상품 추가</a><input id="ur" placeholder="복사한 링크 붙여넣기 (https://…)" inputmode="url"><input id="pr" placeholder="가격 (예: 30000)" inputmode="numeric" maxlength="11"><label id="imgb" for="imgf" class="lbtn">🖼 이미지</label></div>
-<div id="gh"></div><div id="cart">장바구니 0</div>
+<div id="gh"></div><button id="cart" aria-label="장바구니 보기">🛒 장바구니 0</button><div id="cartbox" role="dialog" aria-modal="true" aria-labelledby="cbT"><div class="qb"><h3 id="cbT">🛒 장바구니</h3><div id="cbl"></div><div class="row"><button id="cbX">닫기</button></div></div></div>
 <div id="toast"></div>
 <div id="joy"><div id="knob"></div></div>
 <div id="dot"></div><button id="view">3인칭 보기</button><button id="chr">캐릭터 선택</button><button id="spd">배속 x1</button>
@@ -237,8 +238,8 @@ function rail(x0,z0,x1,z1){const L=Math.hypot(x1-x0,z1-z0),ang=Math.atan2(x1-x0,
 rail(0,13.1,0,10.6);rail(-3.6,13.1,-3.6,10.9);rail(0,10.6,6.4,10.6);rail(6.4,10.6,6.4,4.6);
 const mat=(txt,c1)=>cv(256,128,(g,w,h)=>{g.fillStyle=c1;g.fillRect(0,0,w,h);g.strokeStyle='#fff';g.lineWidth=6;g.strokeRect(8,8,w-16,h-16);g.fillStyle='#fff';g.font='bold 56px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(txt,w/2,h/2)});
 floorArt(mat('입구','#b3261e'),3,1.5,-1.8,12.1,.03);floorArt(mat('출구','#2f7d4a'),3,1.5,1.8,12.1,.03);
-floorArt(cv(128,256,(g,w,h)=>{g.strokeStyle='#5b9bf0';g.lineWidth=10;g.lineJoin='round';for(let i=0;i<4;i++){const y=30+i*60;g.beginPath();g.moveTo(24,y);g.lineTo(64,y+30);g.lineTo(104,y);g.stroke()}}),2.4,6,7.7,7.6);
-floorArt(cv(256,128,(g,w,h)=>{g.strokeStyle='#5b9bf0';g.lineWidth=10;g.lineJoin='round';for(let i=0;i<4;i++){const x=30+i*60;g.beginPath();g.moveTo(x+30,24);g.lineTo(x,64);g.lineTo(x+30,104);g.stroke()}}),3.4,1.6,5.8,11.7,.014);
+floorArt(cv(128,256,(g,w,h)=>{g.strokeStyle='#e02424';g.lineWidth=10;g.lineJoin='round';for(let i=0;i<4;i++){const y=30+i*60;g.beginPath();g.moveTo(24,y);g.lineTo(64,y+30);g.lineTo(104,y);g.stroke()}}),2.4,6,7.7,7.6);
+floorArt(cv(256,128,(g,w,h)=>{g.strokeStyle='#e02424';g.lineWidth=10;g.lineJoin='round';for(let i=0;i<4;i++){const x=30+i*60;g.beginPath();g.moveTo(x+30,24);g.lineTo(x,64);g.lineTo(x+30,104);g.stroke()}}),3.4,1.6,5.8,11.7,.014);
 function planter(x,z){box(.9,.45,.9,WM,x,.225,z);box(.96,.06,.96,WD,x,.47,z);[[-.2,-.1],[.2,0],[0,.2]].forEach(([dx,dz],i)=>{const m=new THREE.Mesh(new THREE.SphereGeometry(.3+i*.03,10,8),new THREE.MeshLambertMaterial({color:i%2?0x3f9b4a:0x2f8f4e}));m.position.set(x+dx,.75,z+dz);S.add(m)})}
 
 box(.18,3.0,.18,WD,-3.9,1.5,10.55);box(.18,3.0,.18,WD,3.9,1.5,10.55);box(8,.18,.3,WD,0,3.0,10.55);
@@ -1000,7 +1001,7 @@ const SHEET_ID='1Sh0NlBgTX7zsC4c5juQxtGQJY3fEoGTRPbO8HgeoBek',SHEET_TAB='시트1
 function act(){if(paying||dlg)return;
  if(mode==='drive'){carIn();return}if(mode==='exitcar'){carOut();return}
  if(mode==='elv'){const e=elvNear(me.position);if(e){if(held){toast('카트·바구니는 1층에 두고 타 주세요');return}elvCall(e,5)}return}
- if(mode==='pick'&&target){if(!held){toast('입구에서 카트나 바구니를 먼저 잡아 주세요');return}if(held.userData.kind==='basket'&&held.userData.items.length>=6){toast('바구니가 가득 찼어요. 카트를 써 보세요');return}const t=target.item.userData;S.remove(target.item);{const sl=target;if(sl.annex){const tt=Object.assign({},t);setTimeout(()=>{const cur=saved.find(x=>x.id===tt.id)||(tt.demo?tt:null);if(cur&&!sl.item){const it=item(Object.assign({},cur));it.position.set(sl.x,sl.y,sl.z);sl.item=it}},4000)}else queue.push({id:t.id,demo:t.demo,price:t.price,img:t.img,name:t.name,url:t.url,cat:t.cat,pref:target,at:clock+3})}target.item=null;cart.push(t);addToCart(held,t);$('cart').textContent='장바구니 '+cart.length}
+ if(mode==='pick'&&target){if(!held){toast('입구에서 카트나 바구니를 먼저 잡아 주세요');return}if(held.userData.kind==='basket'&&held.userData.items.length>=6){toast('바구니가 가득 찼어요. 카트를 써 보세요');return}const t=target.item.userData;S.remove(target.item);{const sl=target;if(sl.annex){const tt=Object.assign({},t);setTimeout(()=>{const cur=saved.find(x=>x.id===tt.id)||(tt.demo?tt:null);if(cur&&!sl.item){const it=item(Object.assign({},cur));it.position.set(sl.x,sl.y,sl.z);sl.item=it}},4000)}else queue.push({id:t.id,demo:t.demo,price:t.price,img:t.img,name:t.name,url:t.url,cat:t.cat,pref:target,at:clock+3})}target.item=null;cart.push(t);addToCart(held,t);cartUI()}
  else if(mode==='toss'){tossCoin()}
  else if(mode==='dart'){throwDart()}
  else if(mode==='pay'){paying=true;scanT=0;toast('키오스크에서 상품을 스캔하는 중…')}
@@ -1013,7 +1014,7 @@ $('qn').onclick=()=>{$('quit').style.display='none';dlg=false;exitCd=1.5;me.posi
 $('qy').onclick=()=>{$('quit').style.display='none';try{window.close()}catch(e){}$('bye').style.display='flex';ended=true};
 $('again').onclick=()=>{$('bye').style.display='none';dlg=false;exitCd=1.5;
  if(held){held.userData.items.forEach(m=>held.remove(m));held.userData.items=[];held.position.set(held.userData.park.x,held.userData.park.y||0,held.userData.park.z);held.rotation.y=0;held=null}
- cart=[];$('cart').textContent='장바구니 0';me.position.set(-1.8,0,11.4);yaw=Math.PI;pitch=0;ended=false;last=performance.now();requestAnimationFrame(loop)};
+ cart=[];cartUI();me.position.set(-1.8,0,11.4);yaw=Math.PI;pitch=0;ended=false;last=performance.now();requestAnimationFrame(loop)};
 function showPay(){const b=$('box');b.textContent='';
  b.style.cssText='background:#fffdf6;color:#222;border-radius:6px;padding:18px 16px;box-shadow:0 6px 24px #0006';
  const D=(t,css)=>{const d=document.createElement('div');d.textContent=t;d.style.cssText=css||'';return d};
@@ -1042,7 +1043,21 @@ function showPay(){const b=$('box');b.textContent='';
  b.appendChild(D('상품명 옆 버튼을 눌러 구매 페이지로 이동하세요','font-size:12px;text-align:center'));
  const nt=document.createElement('p');nt.textContent=NOTICE;nt.style.cssText='font-size:11px;opacity:.7;margin-top:10px;text-align:center';b.appendChild(nt);
  const c=document.createElement('button');c.textContent='계속 쇼핑';c.onclick=()=>{$('pay').style.display='none'};b.appendChild(c);$('pay').style.display='flex';
- if(held){held.userData.items.forEach(m=>held.remove(m));held.userData.items=[]}cart=[];$('cart').textContent='장바구니 0'}
+ if(held){held.userData.items.forEach(m=>held.remove(m));held.userData.items=[]}cart=[];cartUI()}
+
+function cartUI(){$('cart').textContent='🛒 장바구니 '+cart.length;if($('cartbox').style.display==='flex')cartList()}
+function cartList(){const l=$('cbl');l.textContent='';
+ if(!cart.length){const e=document.createElement('p');e.className='em';e.textContent=held?'아직 담은 상품이 없어요. 진열대에서 담아 보세요!':'바구니나 카트를 들고 상품을 담아 보세요!';l.appendChild(e);return}
+ let sum=0;cart.forEach((t,i)=>{const r=document.createElement('div');r.className='it';
+  if(t.img){const im=document.createElement('img');im.src=t.img;im.alt='';r.appendChild(im)}else{const ic=document.createElement('div');ic.className='ic';ic.textContent='🛍';r.appendChild(ic)}
+  const n=document.createElement('div');n.className='nm';n.textContent=t.name||'상품';r.appendChild(n);
+  const pr=document.createElement('div');pr.className='pr';const v=+t.price||0;sum+=v;pr.textContent=v?v.toLocaleString('ko-KR')+'원':'';r.appendChild(pr);
+  const rm=document.createElement('button');rm.className='rm';rm.textContent='빼기';rm.onclick=()=>{cart.splice(i,1);if(held&&held.userData.items&&held.userData.items[i]){held.remove(held.userData.items[i]);held.userData.items.splice(i,1);const c=held;c.userData.items.forEach((it,n)=>{if(c.userData.kind==='basket')it.position.set((n%3-1)*.15,.32+Math.floor(n/3)*.2,0);else{const l=Math.floor(n/6),k=n%6;it.position.set(k%2?.2:-.2,.62+l*.26,-.35+Math.floor(k/2)*.35)}})}cartUI();toast((t.name||'상품')+' 뺐어요')};r.appendChild(rm);
+  l.appendChild(r)});
+ const tt=document.createElement('div');tt.className='tot';const a=document.createElement('span');a.textContent='총 '+cart.length+'개';const b=document.createElement('span');b.textContent=sum.toLocaleString('ko-KR')+'원';tt.appendChild(a);tt.appendChild(b);l.appendChild(tt)}
+$('cart').onclick=()=>{cartList();$('cartbox').style.display='flex';dlg=true;jv={x:0,z:0}};
+$('cbX').onclick=()=>{$('cartbox').style.display='none';dlg=false};
+$('cartbox').onclick=e=>{if(e.target.id==='cartbox'){$('cartbox').style.display='none';dlg=false}};
 
 function collide(p){OBST.forEach(([x0,x1,z0,z1])=>{const m=.35;if(p.x>x0-m&&p.x<x1+m&&p.z>z0-m&&p.z<z1+m){const dl=p.x-(x0-m),dr=x1+m-p.x,dt=p.z-(z0-m),db=z1+m-p.z,mn=Math.min(dl,dr,dt,db);if(mn===dl)p.x=x0-m;else if(mn===dr)p.x=x1+m;else if(mn===dt)p.z=z0-m;else p.z=z1+m}})}
 let last=performance.now(),fov=60;
