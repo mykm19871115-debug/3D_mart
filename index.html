@@ -364,7 +364,7 @@ const IC={
  pack:g=>{g.fillStyle='#e9b44c';g.fillRect(28,34,72,76);g.fillStyle='#fff';g.fillRect(28,58,72,28);g.fillStyle='#d1433a';g.fillRect(28,34,72,12)}};
 function iconId(n,c){return /TV|티비|텔레비전|모니터/i.test(n)?'tv':/냉장고/.test(n)?'fridge':/세탁기|건조기/.test(n)?'washer':/청소기/.test(n)?'vacuum':/밥솥|포트|토스터|믹서|에어프라이|전자레인지/.test(n)?'cooker':/에어컨|선풍기|히터|청정기|제습|가습/.test(n)?'fan':/노트북|컴퓨터|태블릿/.test(n)?'laptop':/^가전/.test(c||'')?'appl':/파인애플/.test(n)?'pineapple':/복숭아|천도/.test(n)?'peach':/블루베리|베리/.test(n)?'blueberry':/레몬|라임/.test(n)?'lemon':/키위/.test(n)?'kiwi':/피자/.test(n)?'pizza':/사과|apple/i.test(n)?'apple':/바나나/.test(n)?'banana':/오렌지|귤/.test(n)?'orange':/포도/.test(n)?'grape':/딸기/.test(n)?'straw':/수박|멜론/.test(n)?'melon':/소시지|햄|베이컨/.test(n)?'sausage':/삼겹|돼지|목살/.test(n)?'pork':/소고기|한우|스테이크|등심|갈비/.test(n)?'beef':/닭|치킨/.test(n)?'chicken':/연어/.test(n)?'salmon':/새우/.test(n)?'shrimp':/생선|고등어|갈치|오징어|조개|굴/.test(n)?'fish':/주스|음료/.test(n)?'juice':/과자|스낵|칩/.test(n)?'snack':/만두|피자|냉동/.test(n)?'dumpling':/우유/.test(n)?'milk':/라면/.test(n)?'ramen':/계란|달걀/.test(n)?'eggs':/쌀/.test(n)?'rice':/선물|세트/.test(n)?'gift':({과일:'apple',정육:'beef',수산물:'fish',식품:'pack'})[c]||'pack'}
 const PT={};const IMGT={};
-function applyPhoto(sp,src){if(IMGT[src]){sp.material.map=IMGT[src];sp.material.needsUpdate=true;return}const im=new Image();im.onload=()=>{const t=new THREE.Texture(im);t.needsUpdate=true;IMGT[src]=t;sp.material.map=t;sp.material.needsUpdate=true};im.src=src}const fmtP=n=>Number(n).toLocaleString('ko-KR')+'원';
+function applyPhoto(sp,src){if(IMGT[src]){sp.material.map=IMGT[src];sp.material.needsUpdate=true;return}const ext=/^https?:/i.test(src);const urls=ext?[src,'https://images.weserv.nl/?w=256&h=256&fit=contain&bg=white&url='+encodeURIComponent(src.replace(/^https?:\/\//i,''))]:[src];let k=0;const tryLoad=()=>{if(k>=urls.length)return;const im=new Image();if(ext)im.crossOrigin='anonymous';im.onload=()=>{const t=new THREE.Texture(im);t.needsUpdate=true;IMGT[src]=t;sp.material.map=t;sp.material.needsUpdate=true};im.onerror=()=>{k++;tryLoad()};im.src=urls[k]};tryLoad()}const fmtP=n=>Number(n).toLocaleString('ko-KR')+'원';
 // ===== 3D product icons: clay-style models rendered once into sprite textures =====
 const ICON3=(()=>{
 const V2=(x,y)=>new THREE.Vector2(x,y),V3=(x,y,z)=>new THREE.Vector3(x||0,y||0,z||0);
@@ -920,7 +920,7 @@ function dnTick(r,dt){const g=r.g,p=me.position;g.userData.armWave=true;
 const dbDoc=p=>{const d={name:p.name,url:p.url,cat:p.cat,ts:Date.now()};if(p.price!==undefined)d.price=p.price;if(p.img)d.img=p.img;return d};
 const LSK='mart_products_v1';let saved=[],isAdmin=false,pcol=null,firstSnap=true;
 const VALIDCAT={};slots.forEach(s=>VALIDCAT[s.cat]=1);
-const normP=(id,v)=>{if(!v||typeof v.name!=='string'||typeof v.url!=='string'||!/^https?:\/\//i.test(v.url)||!VALIDCAT[v.cat])return null;const o={id:String(id),name:v.name.slice(0,14),url:v.url,cat:v.cat};if(typeof v.price==='number'&&isFinite(v.price)&&v.price>=0)o.price=Math.round(v.price);if(typeof v.img==='string'&&v.img.indexOf('data:image/')===0&&v.img.length<200000)o.img=v.img;return o};
+const normP=(id,v)=>{if(!v||typeof v.name!=='string'||typeof v.url!=='string'||!/^https?:\/\//i.test(v.url)||!VALIDCAT[v.cat])return null;const o={id:String(id),name:v.name.slice(0,14),url:v.url,cat:v.cat};if(typeof v.price==='number'&&isFinite(v.price)&&v.price>=0)o.price=Math.round(v.price);if(typeof v.img==='string'&&((v.img.indexOf('data:image/')===0&&v.img.length<200000)||/^https:\/\//i.test(v.img)))o.img=v.img;return o};
 function persistAll(){try{localStorage.setItem(LSK,JSON.stringify(saved));return true}catch(e){return false}}
 function readLocal(){try{const a=JSON.parse(localStorage.getItem(LSK)||'[]');return(Array.isArray(a)?a:[]).map(v=>normP((v&&v.id)||('p'+Math.random().toString(36).slice(2)),v)).filter(Boolean)}catch(e){return[]}}
 function ensureRoom(c){let free=slots.filter(s=>s.cat===c&&!s.item&&!s.res).length-queue.filter(q=>q.cat===c).length;
@@ -984,16 +984,18 @@ const SHEET_ID='1Sh0NlBgTX7zsC4c5juQxtGQJY3fEoGTRPbO8HgeoBek',SHEET_TAB='시트1
   else if(c==='"')q=true;else if(c===','){row.push(f);f=''}else if(c==='\n'){row.push(f);rows.push(row);row=[];f=''}else if(c!=='\r')f+=c}
   if(f!==''||row.length){row.push(f);rows.push(row)}return rows}
  async function syncSheet(){try{
-  const r=await fetch('https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:csv&headers=0&range=A1:E200&sheet='+encodeURIComponent(SHEET_TAB),{cache:'no-store'});
-  if(!r.ok)return;const rows=parseCSV(await r.text());let label='';const seen={};
+  const r=await fetch('https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:csv&headers=0&range=A1:E300&sheet='+encodeURIComponent(SHEET_TAB),{cache:'no-store'});
+  if(!r.ok)return;const rows=parseCSV(await r.text());let label='';const want=[];
   for(let i=0;i<rows.length;i++){const row=rows[i]||[],rn=i+1;if(String(row[0]||'').trim())label=String(row[0]).trim();if(rn===1)continue;
-   const name=String(row[1]||'').trim().slice(0,14),url=String(row[3]||'').trim(),price=toNum(row[2]),cat=catOf(label);
+   const name=String(row[1]||'').trim().slice(0,14),url=String(row[3]||'').trim(),price=toNum(row[2]),cat=catOf(label),img=String(row[4]||'').trim();
    if(!name||!/^https?:\/\//i.test(url)||!cat||!VALIDCAT[cat])continue;
-   const id=ROWMAP[rn]||('sr'+rn);seen[id]=1;const cur=saved.find(p=>p.id===id);
-   if(!cur){const p=normP(id,{name,url,cat,price:price==null?undefined:price});if(p)addLocal(p,true);continue}
-   const nx=Object.assign({},cur,{name,url,cat});if(price!=null)nx.price=price;
-   if(cur.name!==nx.name||cur.url!==nx.url||cur.cat!==nx.cat||cur.price!==nx.price)applyEdit(nx)}
-  saved.filter(p=>/^sr\d+$/.test(p.id)&&!seen[p.id]).forEach(p=>removeLocal(p.id));
+   const o={id:ROWMAP[rn]||('sr'+rn),name,url,cat};if(price!=null)o.price=price;if(/^https:\/\//i.test(img))o.img=img;want.push(o)}
+  if(!want.length)return;const seen={};want.forEach(o=>seen[o.id]=1);
+  saved.filter(p=>!seen[p.id]).forEach(p=>removeLocal(p.id));
+  want.forEach(o=>{const cur=saved.find(p=>p.id===o.id);
+   if(!cur){const p=normP(o.id,o);if(p)addLocal(p,true);return}
+   const nx=normP(o.id,Object.assign({},o,{img:o.img||(cur.img&&cur.img.indexOf('data:')===0?cur.img:undefined)}));if(!nx)return;
+   if(cur.name!==nx.name||cur.url!==nx.url||cur.cat!==nx.cat||cur.price!==nx.price||cur.img!==nx.img)applyEdit(nx)});
  }catch(e){}}
  syncSheet();setInterval(syncSheet,600000);
 })();
