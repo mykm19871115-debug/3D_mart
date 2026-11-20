@@ -1051,7 +1051,6 @@ function cartUI(){$('cart').textContent='🛒 장바구니 '+cart.length;if($('c
 function cartList(){const l=$('cbl');l.textContent='';
  if(!cart.length){const e=document.createElement('p');e.className='em';e.textContent=held?'아직 담은 상품이 없어요. 진열대에서 담아 보세요!':'바구니나 카트를 들고 상품을 담아 보세요!';l.appendChild(e);return}
  let sum=0;cart.forEach((t,i)=>{const r=document.createElement('div');r.className='it';
-  if(t.img){const im=document.createElement('img');im.src=t.img;im.alt='';r.appendChild(im)}else{const ic=document.createElement('div');ic.className='ic';ic.textContent='🛍';r.appendChild(ic)}
   const n=document.createElement('div');n.className='nm';n.textContent=t.name||'상품';r.appendChild(n);
   const pr=document.createElement('div');pr.className='pr';const v=+t.price||0;sum+=v;pr.textContent=v?v.toLocaleString('ko-KR')+'원':'';r.appendChild(pr);
   const rm=document.createElement('button');rm.className='rm';rm.textContent='빼기';rm.onclick=()=>{cart.splice(i,1);if(held&&held.userData.items&&held.userData.items[i]){held.remove(held.userData.items[i]);held.userData.items.splice(i,1);const c=held;c.userData.items.forEach((it,n)=>{if(c.userData.kind==='basket')it.position.set((n%3-1)*.15,.32+Math.floor(n/3)*.2,0);else{const l=Math.floor(n/6),k=n%6;it.position.set(k%2?.2:-.2,.62+l*.26,-.35+Math.floor(k/2)*.35)}})}cartUI();toast((t.name||'상품')+' 뺐어요')};r.appendChild(rm);
