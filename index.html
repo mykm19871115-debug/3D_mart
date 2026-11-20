@@ -984,10 +984,10 @@ const SHEET_ID='1Sh0NlBgTX7zsC4c5juQxtGQJY3fEoGTRPbO8HgeoBek',SHEET_TAB='시트1
   else if(c==='"')q=true;else if(c===','){row.push(f);f=''}else if(c==='\n'){row.push(f);rows.push(row);row=[];f=''}else if(c!=='\r')f+=c}
   if(f!==''||row.length){row.push(f);rows.push(row)}return rows}
  async function syncSheet(){try{
-  const r=await fetch('https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:csv&headers=0&range=A1:E300&sheet='+encodeURIComponent(SHEET_TAB),{cache:'no-store'});
+  const r=await fetch('https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:csv&headers=0&range=A1:F300&sheet='+encodeURIComponent(SHEET_TAB),{cache:'no-store'});
   if(!r.ok)return;const rows=parseCSV(await r.text());let label='';const want=[];
   for(let i=0;i<rows.length;i++){const row=rows[i]||[],rn=i+1;if(String(row[0]||'').trim())label=String(row[0]).trim();if(rn===1)continue;
-   const name=String(row[1]||'').trim().slice(0,14),url=String(row[3]||'').trim(),price=toNum(row[2]),cat=catOf(label),img=String(row[4]||'').trim();
+   const name=String(row[1]||'').trim().slice(0,14),url=String(row[3]||'').trim(),price=toNum(row[2]),cat=catOf(label),img=(/^https:\/\//i.test(String(row[5]||'').trim())?String(row[5]):String(row[4]||'')).trim();
    if(!name||!/^https?:\/\//i.test(url)||!cat||!VALIDCAT[cat])continue;
    const o={id:ROWMAP[rn]||('sr'+rn),name,url,cat};if(price!=null)o.price=price;if(/^https:\/\//i.test(img))o.img=img;want.push(o)}
   if(!want.length)return;const seen={};want.forEach(o=>seen[o.id]=1);
