@@ -83,10 +83,10 @@ const sign=(t,w,bg,x,y,z)=>{const l=label(t,w,bg,'#fff');l.position.set(x,y,z);S
 const fl=new THREE.Mesh(new THREE.PlaneGeometry(22,26),new THREE.MeshLambertMaterial({color:0xf0e2c8}));fl.rotation.x=-Math.PI/2;S.add(fl);
 const patch=(w,d,c,x,z)=>{const p=new THREE.Mesh(new THREE.PlaneGeometry(w,d),new THREE.MeshLambertMaterial({color:c}));p.rotation.x=-Math.PI/2;p.position.set(x,.01,z);S.add(p)};
 
-box(9.8,3.4,.3,0xe8d3ac,-6.1,1.7,-13);box(9.8,3.4,.3,0xe8d3ac,6.1,1.7,-13);box(2.4,.8,.3,0xe8d3ac,0,3,-13);[[-13,4.42],[6.18,13]].forEach(([a,b])=>box(.3,3.4,b-a,0xe8d3ac,-11,1.7,(a+b)/2));box(.3,.8,1.76,0xe8d3ac,-11,3.0,5.3);box(.3,3.4,14.2,0xe8d3ac,11,1.7,-5.9);box(.3,3.4,9.6,0xe8d3ac,11,1.7,8.2);box(.3,.8,2.2,0xe8d3ac,11,3,2.3);box(.3,3.4,2.2,0xe8d3ac,11,1.7,2.3);OBST.push([10.85,11.15,-13,13]);
+box(9.8,3.4,.3,0xe8d3ac,-6.1,1.7,-13);box(9.8,3.4,.3,0xe8d3ac,6.1,1.7,-13);box(2.4,.8,.3,0xe8d3ac,0,3,-13);[[-13,4.42],[6.18,13]].forEach(([a,b])=>box(.3,3.4,b-a,0xe8d3ac,-11,1.7,(a+b)/2));box(.3,.8,1.76,0xe8d3ac,-11,3.0,5.3);box(.3,3.4,14.2,0xe8d3ac,11,1.7,-5.9);box(.3,3.4,9.6,0xe8d3ac,11,1.7,8.2);box(.3,.8,2.2,0xe8d3ac,11,3,2.3);box(.3,3.4,2.2,0xe8d3ac,11,1.7,2.3);
 
 // shelves & slots
-const slots=[];const OBST=[];
+const slots=[];const OBST=[];OBST.push([10.85,11.15,-13,13]);
 const CATC={과일:'#2f8f4e',식품:'#b8862f',수산물:'#3a78b8',정육:'#b8483f'};
 const CATW={과일:0xb98a56,식품:0xc9a46a,수산물:0x8fb4d1,정육:0xd9a3a3};
 const WD=0x7a4b24,WM=0xa86a35,WL=0xd9a86c;
